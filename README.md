@@ -1,7 +1,6 @@
 # sys-permissions
 
-This template should help get you started developing with Vue 3 in Vite.
-
+基于 vue3+typescript+vite 实现的后台权限管理系统
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.vscode-typescript-vue-plugin).
