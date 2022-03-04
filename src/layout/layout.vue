@@ -1,6 +1,8 @@
 <template>
   <el-container class="el-container">
-    <el-aside width="200"><Menu :isCollapse="isCollapse" /></el-aside>
+    <el-aside width="200" class="left_menu"
+      ><Menu :isCollapse="isCollapse"
+    /></el-aside>
     <el-container>
       <el-header
         class="el-header justify-between items-center"
@@ -36,7 +38,10 @@
         </div>
       </el-header>
 
-      <el-main class="el_main">
+      <el-main
+        class="el_main"
+        :style="`width: calc(100% - ${!isCollapse ? '200' : '64'}px)`"
+      >
         <AppMain />
       </el-main>
     </el-container>
@@ -60,6 +65,13 @@ const checkMenu = () => {
   min-height: 100vh;
   font-size: 14px;
   color: #515a6e;
+  .left_menu {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    z-index: 10;
+  }
   .el-header {
     position: fixed;
     right: 0;
@@ -83,7 +95,10 @@ const checkMenu = () => {
     }
   }
   .el_main {
-    padding: 70px 20px 20px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 20px;
     max-height: 100%;
     background-color: #f5f7f9;
   }
