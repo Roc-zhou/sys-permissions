@@ -1,0 +1,78 @@
+<template>
+  <el-container class="el-container">
+    <el-aside width="200px"><Menu :isCollapse="isCollapse" /></el-aside>
+    <el-container>
+      <el-header
+        class="el-header justify-between items-center"
+        :style="`width: calc(100% - ${!isCollapse ? '200' : '64'}px)`"
+      >
+        <div class="left">
+          <el-icon :style="'cursor: pointer;'" @click="checkMenu">
+            <fold v-if="!isCollapse" />
+            <expand v-else />
+          </el-icon>
+          <el-icon :style="'margin: 0 20px'"><refresh /></el-icon>
+        </div>
+        <div class="right justify-center items-center">
+          <el-dropdown>
+            <span class="el-dropdown-link items-center el_avatar">
+              <el-avatar :size="'default'" :src="circleUrl"></el-avatar>
+              <span>Auatar</span>
+            </span>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item>退出登录</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </div>
+      </el-header>
+      <el-main class="el_main"> <AppMain /> </el-main>
+    </el-container>
+  </el-container>
+</template>
+<script setup lang="ts">
+import { ref } from "vue";
+import AppMain from "./appMain.vue";
+import { Expand, Fold, Refresh } from "@element-plus/icons-vue";
+import Menu from "@/components/MenuComp.vue";
+const isCollapse = ref(false);
+const circleUrl = ref(
+  "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
+);
+const checkMenu = () => {
+  isCollapse.value = !isCollapse.value;
+};
+</script>
+<style lang="scss" scoped>
+.el-container {
+  min-height: 100vh;
+  font-size: 14px;
+  color: #515a6e;
+  .el-header {
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
+    .left {
+      font-size: 18px;
+    }
+    .right {
+      height: 100%;
+      .el_avatar {
+        height: 100%;
+        padding: 0 10px;
+        cursor: pointer;
+        > span {
+          margin-left: 5px;
+        }
+      }
+    }
+  }
+  .el_main {
+    padding: 70px 20px 20px;
+    max-height: 100%;
+  }
+}
+</style>
