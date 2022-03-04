@@ -1,17 +1,25 @@
 <template>
   <el-container class="el-container">
-    <el-aside width="200px"><Menu :isCollapse="isCollapse" /></el-aside>
+    <el-aside width="200"><Menu :isCollapse="isCollapse" /></el-aside>
     <el-container>
       <el-header
         class="el-header justify-between items-center"
         :style="`width: calc(100% - ${!isCollapse ? '200' : '64'}px)`"
       >
-        <div class="left">
+        <div class="left justify-start items-center">
           <el-icon :style="'cursor: pointer;'" @click="checkMenu">
             <fold v-if="!isCollapse" />
             <expand v-else />
           </el-icon>
           <el-icon :style="'margin: 0 20px'"><refresh /></el-icon>
+
+          <el-breadcrumb separator="/">
+            <el-breadcrumb-item :to="{ path: '/' }"
+              >homepage</el-breadcrumb-item
+            >
+            <el-breadcrumb-item>promotion list</el-breadcrumb-item>
+            <el-breadcrumb-item>promotion detail</el-breadcrumb-item>
+          </el-breadcrumb>
         </div>
         <div class="right justify-center items-center">
           <el-dropdown>
@@ -27,7 +35,10 @@
           </el-dropdown>
         </div>
       </el-header>
-      <el-main class="el_main"> <AppMain /> </el-main>
+
+      <el-main class="el_main">
+        <AppMain />
+      </el-main>
     </el-container>
   </el-container>
 </template>
@@ -55,6 +66,7 @@ const checkMenu = () => {
     top: 0;
     z-index: 10;
     box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
+    background-color: #fff;
     .left {
       font-size: 18px;
     }
@@ -73,6 +85,7 @@ const checkMenu = () => {
   .el_main {
     padding: 70px 20px 20px;
     max-height: 100%;
+    background-color: #f5f7f9;
   }
 }
 </style>
