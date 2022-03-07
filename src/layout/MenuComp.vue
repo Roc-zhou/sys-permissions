@@ -20,7 +20,6 @@ import { useRouter } from "vue-router";
 defineProps<{
   isCollapse: boolean;
 }>();
-
 const defaultActive = ref("");
 const routes = computed(() => useRouter().options.routes);
 console.log(routes.value);

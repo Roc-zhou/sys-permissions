@@ -16,11 +16,10 @@
           <el-icon :style="'margin: 0 20px'"><refresh /></el-icon>
 
           <el-breadcrumb separator="/">
-            <el-breadcrumb-item :to="{ path: '/' }"
-              >homepage</el-breadcrumb-item
-            >
-            <el-breadcrumb-item>promotion list</el-breadcrumb-item>
-            <el-breadcrumb-item>promotion detail</el-breadcrumb-item>
+            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item v-for="(x, i) in matched" :key="i">
+              {{ x.meta.title }}
+            </el-breadcrumb-item>
           </el-breadcrumb>
         </div>
         <div class="right justify-center items-center">
@@ -48,16 +47,31 @@
   </el-container>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted, watch } from "vue";
 import AppMain from "./appMain.vue";
 import { Expand, Fold, Refresh } from "@element-plus/icons-vue";
+import { useRoute } from "vue-router";
 import Menu from "./MenuComp.vue";
+
+const route = useRoute();
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const matched: any = ref([{ meta: { title: "" } }]);
 const isCollapse = ref(false);
 const circleUrl = ref(
   "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
 );
 const checkMenu = () => {
   isCollapse.value = !isCollapse.value;
+};
+watch(route, () => {
+  getBreadcrumb();
+});
+onMounted(() => {
+  getBreadcrumb();
+});
+
+const getBreadcrumb = () => {
+  matched.value = route.matched.filter((item) => item.meta.title !== "首页");
 };
 </script>
 <style lang="scss" scoped>
