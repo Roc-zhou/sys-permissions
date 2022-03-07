@@ -1,8 +1,8 @@
 <template>
   <el-container class="el-container">
-    <el-aside width="200" class="left_menu"
-      ><Menu :isCollapse="isCollapse"
-    /></el-aside>
+    <el-aside width="200" class="left_menu">
+      <Menu :isCollapse="isCollapse" />
+    </el-aside>
     <el-container>
       <el-header
         class="el-header justify-between items-center"
@@ -51,7 +51,7 @@
 import { ref } from "vue";
 import AppMain from "./appMain.vue";
 import { Expand, Fold, Refresh } from "@element-plus/icons-vue";
-import Menu from "@/components/MenuComp.vue";
+import Menu from "./MenuComp.vue";
 const isCollapse = ref(false);
 const circleUrl = ref(
   "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
@@ -97,9 +97,9 @@ const checkMenu = () => {
   .el_main {
     position: absolute;
     right: 0;
-    top: 0;
+    top: 60px;
     padding: 20px;
-    max-height: 100%;
+    height: calc(100vh - 60px);
     background-color: #f5f7f9;
   }
 }
