@@ -13,7 +13,12 @@
             <fold v-if="!isCollapse" />
             <expand v-else />
           </el-icon>
-          <el-icon :style="'margin: 0 20px'"><refresh /></el-icon>
+          <el-icon
+            :style="'cursor: pointer;margin: 0 20px'"
+            :class="loading ? 'loading' : ''"
+            @click="refreshCompent"
+            ><refresh
+          /></el-icon>
 
           <el-breadcrumb separator="/">
             <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
@@ -25,8 +30,8 @@
         <div class="right justify-center items-center">
           <el-dropdown>
             <span class="el-dropdown-link items-center el_avatar">
-              <el-avatar :size="'default'" :src="circleUrl"></el-avatar>
-              <span>Auatar</span>
+              <el-avatar :size="'small'" :src="circleUrl"></el-avatar>
+              <span>Avatar</span>
             </span>
             <template #dropdown>
               <el-dropdown-menu>
@@ -41,7 +46,7 @@
         class="el_main"
         :style="`width: calc(100% - ${!isCollapse ? '200' : '64'}px)`"
       >
-        <AppMain />
+        <AppMain :key="curentTime" />
       </el-main>
     </el-container>
   </el-container>
@@ -63,6 +68,10 @@ const circleUrl = ref(
 const checkMenu = () => {
   isCollapse.value = !isCollapse.value;
 };
+
+const loading = ref(false);
+const curentTime = ref(new Date().getTime());
+
 watch(route, () => {
   getBreadcrumb();
 });
@@ -72,6 +81,13 @@ onMounted(() => {
 
 const getBreadcrumb = () => {
   matched.value = route.matched.filter((item) => item.meta.title !== "首页");
+};
+const refreshCompent = () => {
+  loading.value = true;
+  setTimeout(() => {
+    loading.value = false;
+  }, 1500);
+  curentTime.value = new Date().getTime();
 };
 </script>
 <style lang="scss" scoped>
@@ -115,6 +131,20 @@ const getBreadcrumb = () => {
     padding: 20px;
     height: calc(100vh - 60px);
     background-color: #f5f7f9;
+  }
+  .loading {
+    animation: myRotate 1s linear infinite;
+  }
+  @keyframes myRotate {
+    0% {
+      -webkit-transform: rotate(0deg);
+    }
+    50% {
+      -webkit-transform: rotate(180deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+    }
   }
 }
 </style>
