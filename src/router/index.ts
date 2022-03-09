@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
+import getRoutesList from "./asyncRoutes";
 const Layout = () => import("@/layout/layout.vue");
 
 export const routes: Array<RouteRecordRaw> = [
@@ -19,25 +20,6 @@ export const routes: Array<RouteRecordRaw> = [
           hidden: true,
         },
         component: () => import("@/views/HomeView.vue"),
-      },
-    ],
-  },
-  {
-    path: "/sys",
-    component: Layout,
-    meta: {
-      title: "系统管理",
-      hidden: false,
-    },
-    children: [
-      {
-        path: "/sys/user-management",
-        name: "userManagement",
-        component: () => import("@/views/UserManagementView.vue"),
-        meta: {
-          title: "用户管理",
-          hidden: false,
-        },
       },
     ],
   },
@@ -69,9 +51,41 @@ export const routes: Array<RouteRecordRaw> = [
   },
 ];
 
+export const asyncRoutes: Array<RouteRecordRaw> = [
+  {
+    path: "/sys",
+    component: Layout,
+    meta: {
+      title: "系统管理",
+      hidden: false,
+    },
+    children: [
+      {
+        path: "/sys/user-management",
+        name: "userManagement",
+        component: () => import("@/views/UserManagementView.vue"),
+        meta: {
+          title: "用户管理",
+          hidden: false,
+        },
+      },
+    ],
+  },
+];
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes,
+  routes: routes.concat(asyncRoutes),
+});
+
+let routeFlag = false;
+router.beforeEach((to, from, next) => {
+  if (routeFlag) return next();
+  getRoutesList().then((r) => {
+    routeFlag = true;
+    router.options.routes = router.options.routes.concat(r);
+    next({ path: to.path });
+  });
 });
 
 export default router;

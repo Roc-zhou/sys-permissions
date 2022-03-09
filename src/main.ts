@@ -6,9 +6,5 @@ import "rz-ui";
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
 
-const app = createApp(App);
-
-app.use(router);
-app.use(ElementPlus);
-
-app.mount("#app");
+const app = createApp(App).use(router).use(ElementPlus);
+router.isReady().then(() => app.mount("#app"));
