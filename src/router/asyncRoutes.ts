@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { $get } from "@/utils/axios";
 import type { RouteRecordRaw } from "vue-router";
 
@@ -30,7 +31,7 @@ const getRoutesList = () => {
         return routes;
       }
     })
-    .catch((e) => {
+    .catch(() => {
       return routes;
     });
 };
